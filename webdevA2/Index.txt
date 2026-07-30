@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula 1 Racing</title>
+    <link rel="stylesheet" href="css.css">
+	<script src="Js.js" defer></script>
+</head>
+<body>
+    <nav id="topnav" class="top">
+        <ul>
+            <li><a href="#" data-page="home" class="active">Main</a></li>
+            <li><a href="#" data-page="sun">History of Formula 1</a></li>
+            <li><a href="#" data-page="earth"></a>Technology(F1 car)</li>
+            <li><a href="#" data-page="mars"></a>The Paddock Scene</li>
+            <li><a href="#" data-page="game"></a>Games</li>
+        </ul>
+    </nav>
+	
+</body>
+</html>
