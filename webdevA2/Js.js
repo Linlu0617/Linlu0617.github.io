@@ -571,7 +571,7 @@ if (gamePage && feedbackPage && p1btn && p2btn) {
 }
 
 // ============================================================
-// Ball Game - Move with buttons and keyboard
+// Car Game - Move with buttons and keyboard
 // ============================================================
 
 const leftBtn = document.querySelector("#leftBtn");
@@ -584,12 +584,13 @@ const ball = document.querySelector("#gamephoto");
 var ballX = 0;
 var ballY = 0;
 var rotationAngle = 0;
+var timerInterval = null;
 
 // space limited
 const MIN_X = 0;
-const MAX_X = 1000;
+const MAX_X = 440;
 const MIN_Y = 0;
-const MAX_Y = 400;
+const MAX_Y = 350;
 
 // reset 
 function ResetPos() {
@@ -600,6 +601,18 @@ function ResetPos() {
     ball.style.top = ballY + "px";
     ball.innerText = ballX + "," + ballY;
     ball.style.transform = 'rotate(0deg)';
+    // Reset score and timer when game resets
+    score = 0;
+    timing = 30;
+    if (scoreBox) scoreBox.innerHTML = "⭐ Score: 0";
+    if (timerBox) timerBox.innerHTML = "⏱️ Time: 30";
+    generateStars();
+    // Reset timer interval
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    startTimer();
 }
 
 // turning by the direction
@@ -624,6 +637,42 @@ function rotateImageByDirection(direction) {
     ball.style.transition = 'transform 0.2s ease';
 }
 
+// Generate stars in the game area
+function generateStars() {
+    // Remove old stars
+    document.querySelectorAll('.star').forEach(function(s) { s.remove(); });
+    
+    var gameArea = document.getElementById('gameArea');
+    if (!gameArea) return;
+    
+    for (var i = 0; i < 8; i++) {
+        var star = document.createElement('div');
+        star.className = 'star';
+        star.textContent = '⭐';
+        var x = Math.random() * 390 + 25;
+        var y = Math.random() * 300 + 25;
+        star.dataset.x = x;
+        star.dataset.y = y;
+        star.style.left = x + 'px';
+        star.style.top = y + 'px';
+        gameArea.appendChild(star);
+    }
+}
+
+// Check if car collected any stars
+function checkCollect() {
+    var stars = document.querySelectorAll('.star');
+    stars.forEach(function(star) {
+        var sx = parseFloat(star.dataset.x);
+        var sy = parseFloat(star.dataset.y);
+        var dx = ballX - sx;
+        var dy = ballY - sy;
+        if (dx * dx + dy * dy < 600) {
+            star.remove();
+            F1Catch(); // Add score
+        }
+    });
+}
 
 function MovePos(leftInc, topInc) {
     ballX = Math.min(MAX_X, Math.max(MIN_X, ballX + leftInc));
@@ -632,11 +681,12 @@ function MovePos(leftInc, topInc) {
     ball.style.top = ballY + "px";
     ball.innerText = ballX + "," + ballY;
     
-   
     if (leftInc > 0) rotateImageByDirection('right');
     else if (leftInc < 0) rotateImageByDirection('left');
     else if (topInc < 0) rotateImageByDirection('up');
     else if (topInc > 0) rotateImageByDirection('down');
+    
+    checkCollect();
 }
 
 function MoveLeft() {
@@ -645,6 +695,7 @@ function MoveLeft() {
     ball.style.top = ballY + "px";
     ball.innerText = ballX + "," + ballY;
     rotateImageByDirection('left');
+    checkCollect();
 }
 
 leftBtn.addEventListener("click", MoveLeft);
@@ -659,7 +710,7 @@ downBtn.addEventListener("click", function() {
 });
 resetBtn.addEventListener("click", ResetPos);
 
-
+// Keyboard controls with R key reset
 document.addEventListener('keydown', function(kbEvt) {
     if (kbEvt.code === "ArrowRight") {
         MovePos(10, 0);
@@ -682,6 +733,53 @@ document.addEventListener('keydown', function(kbEvt) {
         kbEvt.preventDefault();
     }
 });
+
+// ============================================================
+// Score System
+// ============================================================
+
+const scoreBox = document.getElementById("scoreBox");
+var score = 0;
+
+function F1Catch() {
+    score++;
+    if (scoreBox) scoreBox.innerHTML = "Score: " + score;
+}
+
+// ============================================================
+// Timer System
+// ============================================================
+
+const timerBox = document.getElementById("timerBox");
+var timing = 30;
+
+function F1Timer() {
+    timing--;
+    if (timerBox) timerBox.innerHTML = "Time: " + timing;
+    if (timing <= 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+// Start timer countdown
+function startTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    timerInterval = setInterval(function() {
+        if (timing > 0) {
+            F1Timer();
+        }
+    }, 1000);
+}
+
+// Generate stars when page loads
+generateStars();
+startTimer();
+
+
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const name = document.getElementById('userName').value.trim();
@@ -698,16 +796,19 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     }
 });
 
-// ===== Method 1: Identify by Class Name =====
+// ============================================================
+// Sprite Button Controls
+// ============================================================
+
 document.querySelectorAll('.spritebtn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-        // Determine which button was clicked
         var icon = this.querySelector('.resetbtnsprite, .fullscrbtnsprite');
         
         if (icon) {
             if (icon.classList.contains('resetbtnsprite')) {
-                location.reload();
-                console.log('Reset clicked!');
+                // Reset game without refresh
+                ResetPos();
+                console.log('🔄 Game reset via sprite button');
             } else if (icon.classList.contains('fullscrbtnsprite')) {
                 if (!document.fullscreenElement) {
                     document.documentElement.requestFullscreen();
