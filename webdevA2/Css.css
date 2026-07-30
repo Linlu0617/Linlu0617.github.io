@@ -966,16 +966,59 @@ button.card2:hover {
 #gamePage button#resetBtn:hover {
     background: #e10600;
 }
-
-#gamephoto {
-    width: 100px;
-    height: 100px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#gamePage .scoreBox {
+    background: #1a1a1a;
+    color: #fff;
+    border: 2px solid #2a2a2a;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: .3s;
+    margin: 5px;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
 }
 
+#gamePage .scoreBox strong {
+    color: #ffd700;
+    font-size: 20px;
+}
+
+#gamePage .scoreBox:hover {
+    border-color: #e10600;
+    background: rgba(225, 6, 0, 0.1);
+}
+
+.game-area {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(225, 6, 0, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 0 auto 15px;
+}
+
+#gamephoto {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+/* ===== Star Styles ===== */
+.star {
+    position: absolute;
+    font-size: 28px;
+    user-select: none;
+}
 /* ===== Feedback Form ===== */
 #feedbackPage form {
     display: flex;
