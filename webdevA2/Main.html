@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Css.css">
+    <script src="Js.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="Pic/BL.png">
+    <title>Formula 1 Racing</title>
+</head>
+<body>
+    <!-- ===== Navigation ===== -->
+    <nav id="topnav" class="top">
+        <ul>
+            <li><button data-page="home" class="active">Main</button></li>
+            <li><button data-page="history">History of Formula 1</button></li>
+            <li><button data-page="tech">Technology (F1 car)</button></li>
+            <li><button data-page="paddock">The Paddock Scene</button></li>
+            <li><button data-page="game">Games</button></li>
+        </ul>
+        <div class="nav-box"></div>
+    </nav>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- ===== 页面顶级标题（隐藏） ===== -->
+    <h1 id="site-title" class="visually-hidden">Formula 1 Racing</h1>
+
+    <!-- ===== All Pages Container ===== -->
+    <main>
+
+        <!-- ============================================================ -->
+        <!-- PAGE 1: Home -->
+        <!-- ============================================================ -->
+        <section class="page" id="page1" aria-labelledby="page1-heading">
+            <h2 id="page1-heading" class="visually-hidden">Home Page</h2>
+            <section class="shell1" id="top">
+                <header>
+                    <div class="img"></div>
+                </header>
+                <div class="main1">
+                    <h2>Welcome to Formula 1</h2>
+                    <p>F1 is one of the world's top three sporting events, representing the pinnacle of speed and technology for over 70 years. With 2026 regulations bringing active aero and sustainable fuels, F1 remains humanity's ultimate challenge against limits.</p>
+                    <img src="Pic/Img1.jpg" alt="Formula 1 racing cars on track">
+                </div>
+            </section>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PAGE 2: History -->
+        <!-- ============================================================ -->
+        <section class="page" id="page2" aria-labelledby="page2-heading">
+            <h2 id="page2-heading" class="visually-hidden">History Page</h2>
+            <section class="shell2" id="History">
+                <h2 class="sub-heading">Story of Formula 1</h2>
+                <p class="titl">From roaring V12s to today's hybrid engines — F1's history is a story of speed, innovation, and human courage that continues to write new chapters every season.</p>
+
+                <div class="history">
+                    <img src="Pic/H1.jpg" alt="Silverstone circuit 1950 inaugural race">
+                    <div class="text1">
+                        <h3>From Silverstone to a Global Phenomenon</h3>
+                        <p>On May 13, 1950, at Silverstone, the FIA Formula 1 World Championship was officially born. Italian driver Giuseppe Farina won the inaugural race and became the first World Champion.</p>
+                    </div>
+                </div>
+
+                <div class="history">
+                    <img src="Pic/H2.jpg" alt="Early Formula 1 car from the Italian era">
+                    <div class="text1">
+                        <h3>The Italian Era (1950–1957)</h3>
+                        <p>Early F1 was dominated by Italian teams — Alfa Romeo, Ferrari, and Maserati. Juan Manuel Fangio became F1's first superstar, winning five World Championships with three different teams, a record that stood for nearly 50 years.</p>
+                    </div>
+                </div>
+
+                <div class="history">
+                    <img src="Pic/H3.jpg" alt="British era Formula 1 car with monocoque chassis">
+                    <div class="text1">
+                        <h3>The Rise of British Teams (1958–1970s)</h3>
+                        <p>In 1958, the Constructors' Championship was introduced. Colin Chapman of Lotus revolutionized the sport with the monocoque chassis and ground effect aerodynamics. Jackie Stewart won three World Championships and became a pioneer of circuit safety.</p>
+                    </div>
+                </div>
+
+                <div class="history">
+                    <img src="Pic/H4.jpg" alt="1980s Formula 1 car with turbo engine">
+                    <div class="text1">
+                        <h3>The Golden Era (1980–1990s)</h3>
+                        <p>The 1980s witnessed the legendary rivalry between Ayrton Senna and Alain Prost. Honda's turbo engines dominated the era. In 1994, Senna tragically died at Imola, leading to major safety reforms in F1.</p>
+                    </div>
+                </div>
+
+                <div class="history">
+                    <img src="Pic/H5.jpg" alt="Ferrari Formula 1 car from the Schumacher era">
+                    <div class="text1">
+                        <h3>The Ferrari Dynasty (2000s)</h3>
+                        <p>Michael Schumacher joined Ferrari in 1996. From 2000 to 2004, he and Ferrari achieved five consecutive championships, and Schumacher claimed his seventh World Title — a record later matched by Lewis Hamilton in 2020.</p>
+                    </div>
+                </div>
+
+                <div class="history">
+                    <img src="Pic/H6.jpg" alt="Modern hybrid era Formula 1 car">
+                    <div class="text1">
+                        <h3>The Hybrid Era (2010s–Present)</h3>
+                        <p>In 2014, F1 entered the V6 turbo hybrid era. Mercedes and Lewis Hamilton dominated the sport. In 2021, Max Verstappen ended Mercedes' reign. From 2022 to 2024, Verstappen and Red Bull achieved four consecutive titles. In 2025, F1 celebrates its 75th anniversary, with new manufacturers like Audi and Cadillac joining the grid.</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PAGE 3: Technology -->
+        <!-- ============================================================ -->
+        <section class="page" id="page3" aria-labelledby="page3-heading">
+            <h2 id="page3-heading" class="visually-hidden">Technology Page</h2>
+            <section id="technology">
+                <h2 class="sub-heading">Technology of Formula 1 car</h2>
+
+                <div id="click">
+                    <div id="drawerboxes">
+                        <div class="drawbox active">
+                            <button class="draw-btn active" onclick="slideTo(1)">
+                                Aerodynamics
+                                <span class="drawer-head">1</span>
+                            </button>
+                        </div>
+                        <div class="drawbox">
+                            <button class="draw-btn" onclick="slideTo(2)">
+                                Power Unit
+                                <span class="drawer-head">2</span>
+                            </button>
+                        </div>
+                        <div class="drawbox">
+                            <button class="draw-btn" onclick="slideTo(3)">
+                                Chassis & Bodywork
+                                <span class="drawer-head">3</span>
+                            </button>
+                        </div>
+                        <div class="drawbox">
+                            <button class="draw-btn" onclick="slideTo(4)">
+                                Suspension & Tires
+                                <span class="drawer-head">4</span>
+                            </button>
+                        </div>
+                        <div class="drawbox">
+                            <button class="draw-btn" onclick="slideTo(5)">
+                                Electronics & Safety
+                                <span class="drawer-head">5</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-sec">
+                    <div id="slide-bar">
+                        <div id="bar"></div>
+                    </div>
+                    <div id="card-section">
+                        <div class="card">
+                            <div class="card-small-title">Aerodynamics</div>
+                            <div class="card-title">The Heart of Speed</div>
+                            <div class="card-content">F1 cars are designed to generate massive downforce through front wings, rear wings, and diffusers, effectively gluing the car to the track. In 2026, active aerodynamics will replace the current DRS system, with "corner mode" and "straight mode" for optimal performance. "Dirty air" — turbulent airflow from the car ahead — remains a key challenge for overtaking.</div>
+                            <div class="cardimg">
+                                <img src="Pic/T1.png" alt="F1 car aerodynamics diagram showing downforce">
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-small-title">Power Unit</div>
+                            <div class="card-title">From V8 to Hybrid</div>
+                            <div class="card-content">Today's F1 cars use a 1.6L V6 turbo hybrid engine producing nearly 1,000 horsepower with over 50% thermal efficiency. The MGU-K recovers braking energy, while the battery stores power for strategic deployment. In 2026, the electric output will increase by nearly 300%, achieving a 50:50 power split between the internal combustion engine and electric motor, powered by 100% sustainable fuels.</div>
+                            <div class="cardimg">
+                                <img src="Pic/T2.png" alt="F1 power unit diagram showing V6 hybrid engine components">
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-small-title">Chassis & Bodywork</div>
+                            <div class="card-title">The Miracle of Carbon Fiber</div>
+                            <div class="card-content">The monocoque is the driver's survival cell. Made of carbon fiber, it weighs just 35kg but is twice as strong as steel. The Halo is a titanium protection device weighing 7kg that can withstand 12 tonnes of impact. It has saved multiple lives since 2018. The roll hoop protects the driver's head in a rollover. Drivers are secured by a six-point harness, and the wheel is removable for emergency escape. The suspension uses push-rod or pull-rod design to control attitude, absorb shocks, and maintain grip.</div>
+                            <div class="cardimg">
+                                <img src="Pic/T3.png" alt="F1 chassis and monocoque structure diagram">
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-small-title">Suspension & Tires</div>
+                            <div class="card-title">The Art of Grip</div>
+                            <div class="card-content">F1 cars use advanced push-rod and pull-rod suspension systems to optimize tire contact with the track. Pirelli provides five tire compounds ranging from hard to soft, with drivers forced to use at least two compounds per race. Tire temperature management is crucial for performance, with blankets heating tires to around 100°C before they hit the track.</div>
+                            <div class="cardimg">
+                                <img src="Pic/T4.png" alt="F1 suspension and tire diagram">
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-small-title">Electronics & Safety</div>
+                            <div class="card-title">The Brains Behind the Beast</div>
+                            <div class="card-content">The steering wheel features over 20 buttons, allowing drivers to adjust engine modes, brake balance, and differential settings on the fly. The ECU (Electronic Control Unit) monitors hundreds of sensors, ensuring optimal performance. Safety advancements include the Halo cockpit protection, advanced crash structures, and the HANS device, all contributing to the sport's significantly improved safety record.</div>
+                            <div class="cardimg">
+                                <img src="Pic/T5.png" alt="F1 steering wheel and electronic systems diagram">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PAGE 4: Paddock -->
+        <!-- ============================================================ -->
+        <section class="page" id="page4" aria-labelledby="page4-heading">
+            <h2 id="page4-heading" class="visually-hidden">Paddock Page</h2>
+            <section id="Padok">
+                <h2>The Paddock Scene</h2>
+                <p class="titl">Formula 1 is far more than a contest of drivers — it is a fierce battleground of technology, strategy, and capital among the world's leading automotive manufacturers and racing teams.</p>
+
+                <h3 class="sub-heading">11 Formula 1 Teams <span class="badge">2026 Season</span></h3>
+                <div class="teamlist" id="teamlist">
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo1.jpg" alt="Red Bull Racing logo"></span>
+                        <div class="name">Oracle Red Bull Racing</div>
+                    </div>
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo2.jpg" alt="Scuderia Ferrari logo"></span>
+                        <div class="name">Scuderia Ferrari HP</div>
+                    </div>
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo3.jpg" alt="Mercedes AMG Petronas logo"></span>
+                        <div class="name">Mercedes-AMG PETRONAS</div>
+                    </div>
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo4.jpg" alt="McLaren F1 Team logo"></span>
+                        <div class="name">McLaren F1 Team</div>
+                    </div>
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo5.jpg" alt="Aston Martin Aramco logo"></span>
+                        <div class="name">Aston Martin Aramco</div>
+                    </div>
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo6.jpg" alt="BWT Alpine F1 Team logo"></span>
+                        <div class="name">BWT Alpine F1 Team</div>
+                    </div>
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo7.jpg" alt="Williams Racing logo"></span>
+                        <div class="name">Williams Racing</div>
+                    </div>
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo8.jpg" alt="Visa Cash App RB F1 Team logo"></span>
+                        <div class="name">Visa Cash App RB F1 Team</div>
+                    </div>
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo9.jpg" alt="Stake F1 Team Kick Sauber logo"></span>
+                        <div class="name">Stake F1 Team Kick Sauber</div>
+                    </div>
+                    <div class="team-card">
+                        <span class="logo"><img src="Pic/Logo10.jpg" alt="MoneyGram Haas F1 Team logo"></span>
+                        <div class="name">MoneyGram Haas F1 Team</div>
+                    </div>
+                </div>
+
+                <h3 class="sub-heading">Classic Formula 1 Tracks <span class="badge">All Seasons</span></h3>
+                <div class="trackinf">
+                    <p>Formula 1 circuits are FIA-homologated closed-loop racing venues, categorized into permanent purpose-built racetracks and temporary street circuits, spanning all five continents. Lap lengths typically range from 3.5 to 7 kilometers, with a minimum width of 12 meters, and must be equipped with pit lanes, safety barriers, and medical facilities.</p>
+
+                    <div class="tracktit">Classic Active Circuits</div>
+                    <div class="trackcards">
+                        <button class="card2" data-track="spa">🇧🇪 Spa-Francorchamps</button>
+                        <button class="card2" data-track="monaco">🇲🇨 Circuit de Monaco</button>
+                        <button class="card2" data-track="silverstone">🇬🇧 Silverstone Circuit</button>
+                        <button class="card2" data-track="suzuka">🇯🇵 Suzuka Circuit</button>
+                        <button class="card2" data-track="monza">🇮🇹 Monza Circuit</button>
+                        <button class="card2" data-track="interlagos">🇧🇷 Interlagos Circuit</button>
+                        <button class="card2" data-track="hungaroring">🇭🇺 Hungaroring</button>
+                        <button class="card2" data-track="montreal">🇨🇦 Circuit Gilles Villeneuve</button>
+                        <button class="card2" data-track="redbullring">🇦🇹 Red Bull Ring</button>
+                        <button class="card2" data-track="singapore">🇸🇬 Marina Bay Street Circuit</button>
+                    </div>
+                </div>
+
+                <div class="popup" id="popup">
+                    <div class="popup-content">
+                        <button class="popup-close" id="popupClose">&times;</button>
+                        <span class="popup-flag" id="popupFlag">🇦🇺</span>
+                        <div class="popup-name" id="popupName">Track Name</div>
+                        <span class="popup-location" id="popupLocation">Location</span>
+                        <div class="popup-stats">
+                            <div class="stat">
+                                <small>Length</small>
+                                <strong id="popupLength">-</strong>
+                            </div>
+                            <div class="stat">
+                                <small>Corners</small>
+                                <strong id="popupCorners">-</strong>
+                            </div>
+                            <div class="stat">
+                                <small>Record</small>
+                                <strong id="popupRecord">-</strong>
+                            </div>
+                            <div class="stat">
+                                <small>Type</small>
+                                <strong id="popupType">-</strong>
+                            </div>
+                        </div>
+                        <p class="popup-desc" id="popupDesc">Track description goes here.</p>
+                    </div>
+                </div>
+
+            </section>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PAGE 5: Games -->
+        <!-- ============================================================ -->
+        <section class="page" id="page5" aria-labelledby="page5-heading">
+            <h2 id="page5-heading" class="visually-hidden">Games Page</h2>
+            <section id="gamesSection">
+                <h2>Games & Feedback</h2>
+
+                <nav>
+                    <ul>
+                        <li><button id="p1btn" class="active">Games</button></li>
+                        <li><button id="p2btn">Feedback</button></li>
+                    </ul>
+                </nav>
+
+                <div id="pagecontainer">
+
+                    <!-- ===== GAME PAGE ===== -->
+                    <section class="game-feedback" id="gamePage">
+                        <h3>Car Game</h3>
+                        <p style="color:rgba(255,255,255,0.4); font-size:13px; margin-bottom:15px;">
+                            Use buttons or arrow keys to move the ball
+                        </p>
+                        <div class="game-controls">
+                            <button id="leftBtn">←</button>
+                            <button id="upBtn">↑</button>
+                            <button id="downBtn">↓</button>
+                            <button id="rightBtn">→</button>
+                            <button id="resetBtn">⟲ Reset</button>
+                        </div>
+                        <img src="Pic/game.png" id="gamephoto" alt="Car racing game interface">
+                    </section>
+
+                    <!-- ===== FEEDBACK PAGE ===== -->
+                    <section class="game-feedback" id="feedbackPage">
+                        <h3>Feedback</h3>
+                        <form id="feedbackForm">
+                            <input type="text" id="userName" placeholder="Your Name" required>
+                            <textarea id="userFeedback" placeholder="Your feedback..." rows="3" required></textarea>
+                            <button type="submit">Submit</button>
+                            <p id="formFeedback"></p>
+                        </form>
+                    </section>
+
+                </div>
+            </section>
+        </section>
+
+    </main>	
+	
+	<div class="sidebar-buttons">
+		<div class="spritebtn">
+			<div class="resetbtnsprite"></div>
+		</div>
+		<div class="spritebtn">
+			<div class="fullscrbtnsprite"></div>
+		</div>
+	</div>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h3>F1 RACING</h3>
+                <p>Formula 1 · 2026 Season</p>
+            </div>
+            <div class="footer-center">
+                <p>© 2026 F1 Assignment · All Rights Reserved</p>
+                <p class="footer-credit">Designed for Web Development A2</p>
+            </div>
+            <div class="footer-right">
+                <img class="QRcode" src="Pic/QR.png" alt="QR code linking to F1 page">
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== Music Player (Sidebar) ===== -->
+    <div class="music-sidebar" id="musicSidebar">
+        <div class="music-toggle" id="musicToggle"></div>
+        <div class="music-player-wrapper" id="musicPlayerWrapper">
+            <section class="MUSIC">
+                <h2 class="visually-hidden">Music Player</h2>
+                <div class="cover">
+                    <img src="Pic/Muisc.jpg" alt="Lost My Mind album cover">
+                </div>
+                <div class="infor">
+                    <div class="mistit">Lost My Mind</div>
+                </div>
+                <div class="music-box">
+                    <input type="range" class="seekerbar" step="1" value="0" min="0" max="100" oninput="handleSeekerBar()">
+                    <div class="time-row">
+                        <span class="current-time">0:00</span>
+                        <span class="duration">0:00</span>
+                    </div>
+                    <div class="btn-row">
+                        <button class="play" onclick="handlePlay()">▶</button>
+                        <button class="pause" onclick="handlePause()" style="display:none;">⏸</button>
+                    </div>
+                </div>
+                <div class="valume-box">
+                    <span class="valume-down">−</span>
+                    <input type="range" class="valume-range" step="1" value="80" min="0" max="100">
+                    <span class="valume-up">+</span>
+                </div>
+                <audio class="music-element">
+                    <source src="Mus/Lost%20My%20Mind.mp3">
+                </audio>
+            </section>
+        </div>
+    </div>
+	
+</body>
+</html>
