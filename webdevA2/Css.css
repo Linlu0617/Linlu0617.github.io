@@ -861,7 +861,7 @@ button.card2:hover {
     max-width: 1400px;
     height: 1000px;
     margin: 60px auto;
-    padding: 60px 50px;
+    padding:60px 50px 80px 50px; 
 }
 
 #gamesSection>h2 {
@@ -958,15 +958,15 @@ button.card2:hover {
     box-shadow: 0 5px 20px rgba(225, 6, 0, .2);
 }
 
-#gamePage button#resetBtn {
+#gamePage button#resetBtn #startbtn {
     background: #2a0a0a;
     border-color: #e10600;
 }
 
-#gamePage button#resetBtn:hover {
+#gamePage button#resetBtn #startbtn:hover {
     background: #e10600;
 }
-#gamePage .scoreBox {
+#gamePage .scoreBox{
     background: #1a1a1a;
     color: #fff;
     border: 2px solid #2a2a2a;
@@ -995,7 +995,7 @@ button.card2:hover {
 .game-area {
     position: relative;
     width: 100%;
-    max-width: 500px;
+    max-width: 800px;
     height: 400px;
     background: rgba(255, 255, 255, 0.03);
     border: 2px solid rgba(225, 6, 0, 0.2);
@@ -1003,7 +1003,61 @@ button.card2:hover {
     overflow: hidden;
     margin: 0 auto 15px;
 }
+/* ============================================================
+   Game Over Popup
+   ============================================================ */
 
+.game-over-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 100;
+    padding: 20px;
+}
+
+.game-over-overlay.show {
+    display: flex;
+}
+
+.game-over-overlay h2 {
+    color: #e10600;
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.game-over-overlay p {
+    color: #fff;
+    font-size: 20px;
+    margin: 8px 0;
+    text-align: center;
+}
+.game-over-overlay button {
+    padding: 12px 35px;
+    border: none;
+    border-radius: 25px;
+    background: #e10600;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 15px;
+}
+
+.game-over-overlay button:hover {
+    transform: scale(1.05);
+    background: #ff1a00;
+}
 #gamephoto {
     position: absolute;
     width: 50px;
@@ -1019,20 +1073,118 @@ button.card2:hover {
     font-size: 28px;
     user-select: none;
 }
-/* ===== Feedback Form ===== */
+.quiz-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 25px 20px;
+    margin: 10px 0 30px 0;
+}
+
+.quiz-card h1 {
+    color: #e10600;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+fieldset {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+}
+
+legend {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 0 8px;
+}
+
+.options-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.options-wrapper label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.options-wrapper label:hover {
+    background: rgba(225, 6, 0, 0.06);
+}
+
+.options-wrapper input[type="radio"] {
+    accent-color: #e10600;
+    width: 14px;
+    height: 14px;
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#btnSubmit {
+    padding: 10px 30px;
+    border: none;
+    border-radius: 20px;
+    background: #e10600;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+	margin-bottom:10px;
+}
+
+#btnSubmit:hover {
+    background: #ff1a00;
+}
+
+#btnSubmit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#scorebox {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* ============================================================
+   Feedback Form
+   ============================================================ */
+
 #feedbackPage form {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-width: 400px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 #feedbackPage input,
 #feedbackPage textarea {
     padding: 10px 14px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, .1);
-    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     color: #fff;
     font-size: 14px;
     font-family: Arial, sans-serif;
@@ -1044,7 +1196,7 @@ button.card2:hover {
     border-color: #e10600;
 }
 
-#feedbackPage button[type=submit] {
+#feedbackPage button[type="submit"] {
     padding: 10px 20px;
     border-radius: 25px;
     border: none;
@@ -1053,10 +1205,10 @@ button.card2:hover {
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
-    transition: .3s;
+    transition: 0.3s;
 }
 
-#feedbackPage button[type=submit]:hover {
+#feedbackPage button[type="submit"]:hover {
     transform: scale(1.05);
 }
 
@@ -1065,6 +1217,21 @@ button.card2:hover {
     text-align: center;
 }
 
+@media screen and (max-width: 600px) {
+    .options-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .action-row {
+        flex-direction: column;
+        text-align: center;
+    }
+    #btnSubmit {
+        width: 100%;
+    }
+    #feedbackPage form {
+        max-width: 100%;
+    }
+}
 /* ============================================================
    MUSIC PLAYER
    ============================================================ */
@@ -1269,6 +1436,9 @@ button.card2:hover {
     border-radius: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 10px 40px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 255, 255, .05);
+	position: relative;
+    z-index: 1;
+    clear: both;
 }
 
 .footer-content {
