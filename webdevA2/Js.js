@@ -1,28 +1,40 @@
 // ============================================================
-// Scroll Parallax Effect
+// Scroll Parallax Effect - Header clip-path and image zoom
 // ============================================================
 
+// Select the header and image elements
 const header = document.querySelector('header');
 const img = document.querySelector('.img');
+
+// Track scroll position and animation frame
 let scrollDistance = 0;
 let requestId = null;
 
+// Update header clip-path and image scale based on scroll
 function updateHeaderClipPath() {
+    // Calculate scroll progress (0 to 1)
     const progress = Math.min(1, scrollDistance / 1100);
+    // Map progress to clip-path bottom percentage (100% to 40%)
     const bottomPercent = 100 - (progress * 60);
+    // Apply clip-path to header
     const clipPathValue = `polygon(0 0, 100% 0%, 100% ${bottomPercent}%, 0 100%)`;
     header.style.clipPath = clipPathValue;
 
+    // Scale image from 1x to 2x as user scrolls
     const scaleValue = 1 + progress;
     img.style.transform = `scale(${scaleValue})`;
 
+    // Fade image opacity from 1 to 0
     const opacityValue = 1 - progress;
     img.style.opacity = opacityValue;
 }
 
+// Handle scroll events with requestAnimationFrame for performance
 function scrollHandler(event) {
+    // Update scroll distance, clamped between 0 and 700
     scrollDistance = Math.max(0, Math.min(700, scrollDistance + event.deltaY));
 
+    // Only update if not already scheduled
     if (!requestId) {
         requestId = window.requestAnimationFrame(() => {
             updateHeaderClipPath();
@@ -31,14 +43,16 @@ function scrollHandler(event) {
     }
 }
 
+// Listen for wheel events with passive flag for better performance
 window.addEventListener('wheel', scrollHandler, { passive: true });
 
 // ============================================================
-// Progress Bar
+// Progress Bar - Shows scroll position on page
 // ============================================================
 
 const progressBar = document.getElementById('progressBar');
 
+// Update progress bar width as user scrolls
 window.addEventListener('scroll', function() {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -47,7 +61,7 @@ window.addEventListener('scroll', function() {
 });
 
 // ============================================================
-// Slide Carousel
+// Slide Carousel - Technology section drawer navigation
 // ============================================================
 
 let chosenSlideNumber = 1;
@@ -55,11 +69,14 @@ let offset = 0;
 let baroffset = 0;
 let intervalID;
 
+// Get all drawer buttons and slide container
 const drawerBtns = document.querySelectorAll(".draw-btn");
 const slideSection = document.querySelector("#slide-sec");
 
+// Start the carousel
 startSlide();
 
+// Clicking a drawer button restarts the carousel
 drawerBtns.forEach(function(btn) {
     btn.addEventListener("click", function() {
         clearInterval(intervalID);
@@ -67,6 +84,7 @@ drawerBtns.forEach(function(btn) {
     });
 });
 
+// Pause carousel when mouse enters, resume when leaves
 slideSection.addEventListener("mouseenter", function() {
     clearInterval(intervalID);
 });
@@ -75,23 +93,29 @@ slideSection.addEventListener("mouseleave", function() {
     startSlide();
 });
 
+// Navigate to a specific slide
 function slideTo(slideNumber) {
+    // Update drawer box and button states
     drawerboxToggle(slideNumber);
     drawerbtnToggle(slideNumber);
 
+    // Calculate offsets for slide and bar
     var previousSlideNumber = chosenSlideNumber;
     chosenSlideNumber = slideNumber;
     offset += (chosenSlideNumber - previousSlideNumber) * (-100);
     baroffset += (chosenSlideNumber - previousSlideNumber) * (-100);
     barslide(baroffset);
 
+    // Move all slides to show the selected one
     var slides = document.querySelectorAll(".card");
     slides.forEach(function(slide, index) {
         if (index === slideNumber - 1) {
+            // Show the selected slide
             slide.style.display = 'block';
             slide.style.opacity = '1';
             slide.style.transform = 'translateY(0)';
         } else {
+            // Hide other slides
             slide.style.display = 'none';
             slide.style.opacity = '0';
             slide.style.transform = 'translateY(30px)';
@@ -99,6 +123,7 @@ function slideTo(slideNumber) {
     });
 }
 
+// Toggle active class on drawer boxes
 function drawerboxToggle(drawerboxNumber) {
     var prevDrawerboxNumber = chosenSlideNumber;
     var drawerboxes = document.querySelectorAll(".drawbox");
@@ -106,6 +131,7 @@ function drawerboxToggle(drawerboxNumber) {
     drawerboxes[drawerboxNumber - 1].classList.toggle("active");
 }
 
+// Toggle active class on drawer buttons
 function drawerbtnToggle(drawerBtnNumber) {
     var prevdrawerBtnNumber = chosenSlideNumber;
     var drawerBtns = document.querySelectorAll(".draw-btn");
@@ -113,11 +139,13 @@ function drawerbtnToggle(drawerBtnNumber) {
     drawerBtns[drawerBtnNumber - 1].classList.toggle("active");
 }
 
+// Move the side navigation bar indicator
 function barslide(baroffset) {
     var bar = document.querySelector("#bar");
     bar.style.transform = "translateY(" + (-baroffset) + "%)";
 }
 
+// Start automatic slideshow
 function startSlide() {
     clearInterval(intervalID);
     intervalID = setInterval(function() {
@@ -153,7 +181,9 @@ function adjustSlideHeight() {
     
     var windowWidth = window.innerWidth;
     
+    // Different heights for different screen sizes
     if (windowWidth <= 480) {
+        // Mobile phones
         slideSec.style.minHeight = '200px';
         slideSec.style.maxHeight = '320px';
         slideSec.style.height = 'auto';
@@ -161,6 +191,7 @@ function adjustSlideHeight() {
             card.style.padding = '8px 10px';
         });
     } else if (windowWidth <= 800) {
+        // Tablets
         slideSec.style.minHeight = '300px';
         slideSec.style.maxHeight = '400px';
         slideSec.style.height = 'auto';
@@ -168,6 +199,7 @@ function adjustSlideHeight() {
             card.style.padding = '12px 15px';
         });
     } else {
+        // Desktop - reset to defaults
         slideSec.style.minHeight = '';
         slideSec.style.maxHeight = '';
         slideSec.style.height = '';
@@ -177,13 +209,15 @@ function adjustSlideHeight() {
     }
 }
 
+// Run on load and resize
 document.addEventListener('DOMContentLoaded', adjustSlideHeight);
 window.addEventListener('resize', adjustSlideHeight);
 
 // ============================================================
-// Music Player
+// Music Player - Controls for audio playback
 // ============================================================
 
+// Get all music player elements
 var music = document.querySelector('.music-element');
 var playBtn = document.querySelector('.play');
 var pauseBtn = document.querySelector('.pause');
@@ -191,27 +225,34 @@ var seekbar = document.querySelector('.seekerbar');
 var currentTime = document.querySelector('.current-time');
 var duration = document.querySelector('.duration');
 
+// Hide pause button initially (only show play)
 pauseBtn.style.display = 'none';
 
+// Play music and update button states
 function handlePlay() {
     music.play();
     playBtn.style.display = 'none';
     pauseBtn.style.display = 'flex';
 }
 
+// Pause music and update button states
 function handlePause() {
     music.pause();
     pauseBtn.style.display = 'none';
     playBtn.style.display = 'flex';
 }
 
+// Try to autoplay on page load, but handle browser restrictions
 window.addEventListener('load', function() {
     music.play().then(function() {
+        // Autoplay succeeded
         playBtn.style.display = 'none';
         pauseBtn.style.display = 'flex';
     }).catch(function() {
+        // Autoplay blocked - show play button and wait for user click
         playBtn.style.display = 'flex';
         pauseBtn.style.display = 'none';
+        // Play when user clicks anywhere
         document.addEventListener('click', function() {
             if (music.paused) {
                 music.play();
@@ -222,6 +263,7 @@ window.addEventListener('load', function() {
     });
 });
 
+// When music ends, reset to beginning
 music.addEventListener('ended', function() {
     playBtn.style.display = 'flex';
     pauseBtn.style.display = 'none';
@@ -230,6 +272,7 @@ music.addEventListener('ended', function() {
     currentTime.innerHTML = '0:00';
 });
 
+// Load music duration when data is ready
 music.onloadeddata = function() {
     seekbar.max = music.duration;
     var ds = parseInt(music.duration % 60);
@@ -237,14 +280,17 @@ music.onloadeddata = function() {
     duration.innerHTML = dm + ':' + (ds < 10 ? '0' : '') + ds;
 };
 
+// Update seekbar as music plays
 music.ontimeupdate = function() {
     seekbar.value = music.currentTime;
 };
 
+// Allow user to seek by dragging the seekbar
 function handleSeekerBar() {
     music.currentTime = seekbar.value;
 }
 
+// Update current time display
 music.addEventListener('timeupdate', function() {
     var cs = parseInt(music.currentTime % 60);
     var cm = parseInt((music.currentTime / 60) % 60);
@@ -252,7 +298,7 @@ music.addEventListener('timeupdate', function() {
 }, false);
 
 // ============================================================
-// Volume Controls
+// Volume Controls - Increase / decrease volume
 // ============================================================
 
 var volIcon = document.querySelector('.valume');
@@ -261,19 +307,23 @@ var volRange = document.querySelector('.valume-range');
 var volDown = document.querySelector('.valume-down');
 var volUp = document.querySelector('.valume-up');
 
+// Toggle volume box visibility
 function handleVolume() {
     volIcon.classList.toggle('active');
     volBox.classList.toggle('active');
 }
 
+// Volume down button handler
 if (volDown) {
     volDown.addEventListener('click', handleVolumeDown);
 }
 
+// Volume up button handler
 if (volUp) {
     volUp.addEventListener('click', handleVolumeUp);
 }
 
+// Decrease volume by 20%
 function handleVolumeDown() {
     var newVal = Number(volRange.value) - 20;
     if (newVal < 0) newVal = 0;
@@ -281,6 +331,7 @@ function handleVolumeDown() {
     music.volume = volRange.value / 100;
 }
 
+// Increase volume by 20%
 function handleVolumeUp() {
     var newVal = Number(volRange.value) + 20;
     if (newVal > 100) newVal = 100;
@@ -289,7 +340,7 @@ function handleVolumeUp() {
 }
 
 // ============================================================
-// Music Toggle Button
+// Music Toggle Button - Play when toggle is clicked
 // ============================================================
 
 var musicToggle = document.querySelector('.music-toggle');
@@ -304,12 +355,13 @@ if (musicToggle) {
 }
 
 // ============================================================
-// Sidebar Hover Controls
+// Sidebar Hover Controls - Show/hide music player on hover
 // ============================================================
 
 var sidebar = document.getElementById('musicSidebar');
 var wrapper = document.getElementById('musicPlayerWrapper');
 
+// Show player when hovering sidebar
 if (sidebar && wrapper) {
     sidebar.addEventListener('mouseenter', function() {
         wrapper.classList.add('show');
@@ -323,6 +375,7 @@ if (sidebar && wrapper) {
     });
 }
 
+// Toggle player when clicking the music icon
 var musicToggleBtn = document.getElementById('musicToggle');
 if (musicToggleBtn) {
     musicToggleBtn.addEventListener('click', function(e) {
@@ -331,6 +384,7 @@ if (musicToggleBtn) {
     });
 }
 
+// Hide player when clicking outside
 document.addEventListener('click', function(e) {
     if (sidebar && !sidebar.contains(e.target)) {
         wrapper.classList.remove('show');
@@ -338,23 +392,28 @@ document.addEventListener('click', function(e) {
 });
 
 // ============================================================
-// Cards - Scroll Reveal
+// Cards - Scroll Reveal Animation with Intersection Observer
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Select all cards that need scroll reveal
     var cards = document.querySelectorAll('.team-card, .card2,.history');
 
+    // Create observer to detect when cards enter viewport
     var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry, index) {
             if (entry.isIntersecting) {
+                // Add visible class with staggered delay
                 setTimeout(function() {
                     entry.target.classList.add('visible');
                 }, index * 80);
+                // Stop observing once shown
                 observer.unobserve(entry.target);
             }
         });
     });
 
+    // Start observing each card
     for (var i = 0; i < cards.length; i++) {
         observer.observe(cards[i]);
     }
@@ -468,13 +527,14 @@ const trackData = {
 };
 
 // ============================================================
-// Popup Logic
+// Popup Logic - Display track details when card is clicked
 // ============================================================
 
 const popup = document.getElementById('popup');
 const closeBtn = document.getElementById('popupClose');
 
 if (popup && closeBtn) {
+    // Click on any track card to show details
     document.querySelectorAll('.card2').forEach(function(btn) {
         btn.addEventListener('click', function() {
             const data = trackData[this.dataset.track];
@@ -483,6 +543,7 @@ if (popup && closeBtn) {
                 return;
             }
 
+            // Fill popup with track data
             document.getElementById('popupFlag').textContent = data.flag;
             document.getElementById('popupName').textContent = data.name;
             document.getElementById('popupLocation').textContent = data.location;
@@ -492,16 +553,19 @@ if (popup && closeBtn) {
             document.getElementById('popupType').textContent = data.type;
             document.getElementById('popupDesc').textContent = data.desc;
 
+            // Show popup and prevent body scroll
             popup.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
     });
 
+    // Close popup
     closeBtn.addEventListener('click', function() {
         popup.classList.remove('active');
         document.body.style.overflow = '';
     });
 
+    // Close when clicking background
     popup.addEventListener('click', function(e) {
         if (e.target === popup) {
             popup.classList.remove('active');
@@ -509,6 +573,7 @@ if (popup && closeBtn) {
         }
     });
 
+    // Close with Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && popup.classList.contains('active')) {
             popup.classList.remove('active');
@@ -524,21 +589,26 @@ if (popup && closeBtn) {
 const allPages = document.querySelectorAll('.page');
 const navBtns = document.querySelectorAll('.top ul li button');
 
+// Show first page by default, hide others
 allPages.forEach(function(p, i) {
     p.style.display = i === 0 ? 'block' : 'none';
 });
 
+// Navigation button click handler
 navBtns.forEach(function(btn, index) {
     btn.addEventListener('click', function() {
+        // Update active button state
         navBtns.forEach(function(b) {
             b.classList.remove('active');
         });
         this.classList.add('active');
 
+        // Show selected page, hide others
         allPages.forEach(function(p, i) {
             p.style.display = i === index ? 'block' : 'none';
         });
 
+        // Scroll to top when navigating
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -556,43 +626,200 @@ const p1btn = document.getElementById('p1btn');
 const p2btn = document.getElementById('p2btn');
 
 if (gamePage && feedbackPage && p1btn && p2btn) {
+    // Show Games page by default
     gamePage.style.display = 'block';
     feedbackPage.style.display = 'none';
 
+    // Switch to Games page
     p1btn.addEventListener('click', function() {
         gamePage.style.display = 'block';
         feedbackPage.style.display = 'none';
     });
 
+    // Switch to Feedback page
     p2btn.addEventListener('click', function() {
         gamePage.style.display = 'none';
         feedbackPage.style.display = 'block';
     });
 }
-
 // ============================================================
-// Car Game - Move with buttons and keyboard
+// Car Game - Move with buttons and keyboard, collect stars
 // ============================================================
 
+// Get all game elements
 const leftBtn = document.querySelector("#leftBtn");
 const rightBtn = document.querySelector("#rightBtn");
 const upBtn = document.querySelector("#upBtn");
 const downBtn = document.querySelector("#downBtn");
 const resetBtn = document.querySelector("#resetBtn");
 const ball = document.querySelector("#gamephoto");
+const startBtn = document.getElementById('startbtn');
 
+// Car position and state
 var ballX = 0;
 var ballY = 0;
 var rotationAngle = 0;
 var timerInterval = null;
+var gameRunning = true;
+var gameStarted = false;
 
-// space limited
-const MIN_X = 0;
-const MAX_X = 440;
-const MIN_Y = 0;
-const MAX_Y = 350;
+// Game area boundaries (max position - car size)
+function updateBoundaries() {
+    var windowWidth = window.innerWidth;
+    if (windowWidth <= 800) {
+        MIN_X = 0;
+        MAX_X = 300;
+        MIN_Y = 0;
+        MAX_Y = 340;
+    } else if(windowWidth<=480){
+        MIN_X = 0;
+        MAX_X = 150;
+        MIN_Y = 0;
+        MAX_Y = 340;
+    }else {
+        MIN_X = 0;
+        MAX_X = 740;
+        MIN_Y = 0;
+        MAX_Y = 340;
+    }
+}
 
-// reset 
+window.addEventListener('resize', updateBoundaries);
+
+document.addEventListener('DOMContentLoaded', updateBoundaries);
+
+
+// Rotate car image based on movement direction
+function rotateImageByDirection(direction) {
+    var angles = { up: 0, down: 180, left: -90, right: 90 };
+    rotationAngle = angles[direction] || 0;
+    ball.style.transform = 'rotate(' + rotationAngle + 'deg)';
+    ball.style.transition = 'transform 0.2s ease';
+}
+
+// Generate stars and special balls in the game area
+function generateStars() {
+    // Remove old items
+    document.querySelectorAll('.star, .speed-ball, .slow-ball').forEach(function(s) { s.remove(); });
+    
+    var gameArea = document.getElementById('gameArea');
+    var i;
+    if (!gameArea) return;
+    
+    // 
+    for (i = 0; i < 8; i++) {
+        createItem('star', '⭐', 'star');
+    }
+    
+    // 2 speed ball
+    for (i = 0; i < 4; i++) {
+        createItem('speed', '⚡', 'speed-ball');
+    }
+    
+    // 2 slowball
+    for (i = 0; i < 4; i++) {
+        createItem('slow', '🐢', 'slow-ball');
+    }
+    
+    moveStars();
+}
+
+// Helper function to create items
+function createItem(type, emoji, className) {
+    var gameArea = document.getElementById('gameArea');
+    var item = document.createElement('div');
+    item.className = 'star ' + className;
+    item.textContent = emoji;
+    item.dataset.type = type;
+    var x = Math.random() * 390 + 25;
+    var y = Math.random() * 300 + 25;
+    item.dataset.x = x;
+    item.dataset.y = y;
+    item.dataset.dx = (Math.random() - 0.5) * 1.5;
+    item.dataset.dy = (Math.random() - 0.5) * 1.5;
+    item.style.left = x + 'px';
+    item.style.top = y + 'px';
+    gameArea.appendChild(item);
+}
+
+// Animate stars floating around
+function moveStars() {
+    var stars = document.querySelectorAll('.star');
+    
+    stars.forEach(function(star) {
+        var x = parseFloat(star.dataset.x) + parseFloat(star.dataset.dx);
+        var y = parseFloat(star.dataset.y) + parseFloat(star.dataset.dy);
+        
+        if (x < 0 || x > 740) {
+            star.dataset.dx = -star.dataset.dx;
+            x = parseFloat(star.dataset.x) + parseFloat(star.dataset.dx);
+        }
+        if (y < 0 || y > 340) {
+            star.dataset.dy = -star.dataset.dy;
+            y = parseFloat(star.dataset.y) + parseFloat(star.dataset.dy);
+        }
+        
+        star.dataset.x = x;
+        star.dataset.y = y;
+        star.style.left = x + 'px';
+        star.style.top = y + 'px';
+    });
+    
+    requestAnimationFrame(moveStars);
+}
+
+
+function checkCollect() {
+    var items = document.querySelectorAll('.star');
+    items.forEach(function(item) {
+        var sx = parseFloat(item.dataset.x);
+        var sy = parseFloat(item.dataset.y);
+        var dx = ballX - sx;
+        var dy = ballY - sy;
+        
+        if (dx * dx + dy * dy < 600) {
+            var type = item.dataset.type;
+            item.remove();
+            
+            if (type === 'star') {
+                score += 10;
+            } else if (type === 'speed') {
+                timing += 5;  //speed ball +3s
+                if (timerBox) timerBox.innerHTML = "Time: " + timing;
+            } else if (type === 'slow') {
+                timing -= 5;  //slow ball -5s
+                if (timerBox) timerBox.innerHTML = "Time: " + timing;
+            }
+            
+            if (scoreBox) scoreBox.innerHTML = "Score: " + score;
+            
+            if (document.querySelectorAll('.star[data-type="star"]').length === 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                showGameOver('Game Over', score);
+            }
+			if (timing <= 0 ) {
+				clearInterval(timerInterval);
+				timerInterval = null;
+				showGameOver('Time Up!', score);
+			}
+        }
+    });
+}
+
+// ============================================================
+// Game Start
+// ============================================================
+
+startBtn.addEventListener('click', function() {
+    gameStarted = true;
+    gameRunning = true;
+    ResetPos();
+    generateStars();
+    startTimer();
+});
+
+// Reset game to initial state
 function ResetPos() {
     ballX = 0;
     ballY = 0;
@@ -601,80 +828,34 @@ function ResetPos() {
     ball.style.top = ballY + "px";
     ball.innerText = ballX + "," + ballY;
     ball.style.transform = 'rotate(0deg)';
-    // Reset score and timer when game resets
+    
     score = 0;
     timing = 30;
-    if (scoreBox) scoreBox.innerHTML = "⭐ Score: 0";
-    if (timerBox) timerBox.innerHTML = "⏱️ Time: 30";
+    if (scoreBox) scoreBox.innerHTML = "Score: 0";
+    if (timerBox) timerBox.innerHTML = "Time: 45";
+    
     generateStars();
-    // Reset timer interval
+    
     if (timerInterval) {
         clearInterval(timerInterval);
+		gameStarted = false;
         timerInterval = null;
     }
-    startTimer();
+    gameRunning = true;
+    hideGameOver();
+	
+    if (gameStarted) startTimer();
 }
 
-// turning by the direction
-function rotateImageByDirection(direction) {
-    switch(direction) {
-        case 'up':
-            rotationAngle = 0;
-            break;
-        case 'down':
-            rotationAngle = 180;
-            break;
-        case 'left':
-            rotationAngle = -90;
-            break;
-        case 'right':
-            rotationAngle = 90;
-            break;
-        default:
-            return;
-    }
-    ball.style.transform = `rotate(${rotationAngle}deg)`;
-    ball.style.transition = 'transform 0.2s ease';
+// Check if game is ready to play
+function isGameReady() {
+    return gameRunning && gameStarted;
 }
 
-// Generate stars in the game area
-function generateStars() {
-    // Remove old stars
-    document.querySelectorAll('.star').forEach(function(s) { s.remove(); });
-    
-    var gameArea = document.getElementById('gameArea');
-    if (!gameArea) return;
-    
-    for (var i = 0; i < 8; i++) {
-        var star = document.createElement('div');
-        star.className = 'star';
-        star.textContent = '⭐';
-        var x = Math.random() * 390 + 25;
-        var y = Math.random() * 300 + 25;
-        star.dataset.x = x;
-        star.dataset.y = y;
-        star.style.left = x + 'px';
-        star.style.top = y + 'px';
-        gameArea.appendChild(star);
-    }
-}
-
-// Check if car collected any stars
-function checkCollect() {
-    var stars = document.querySelectorAll('.star');
-    stars.forEach(function(star) {
-        var sx = parseFloat(star.dataset.x);
-        var sy = parseFloat(star.dataset.y);
-        var dx = ballX - sx;
-        var dy = ballY - sy;
-        if (dx * dx + dy * dy < 600) {
-            star.remove();
-            F1Catch(); // Add score
-        }
-    });
-}
-
+// Move car by given amount
 function MovePos(leftInc, topInc) {
+    if (!isGameReady()) return;
+    
     ballX = Math.min(MAX_X, Math.max(MIN_X, ballX + leftInc));
     ballY = Math.min(MAX_Y, Math.max(MIN_Y, ballY + topInc));
     ball.style.left = ballX + "px";
@@ -689,7 +870,10 @@ function MovePos(leftInc, topInc) {
     checkCollect();
 }
 
+// Move left (separate function for left button)
 function MoveLeft() {
+    if (!isGameReady()) return;
+    
     ballX = Math.min(MAX_X, Math.max(MIN_X, ballX - 10));
     ball.style.left = ballX + "px";
     ball.style.top = ballY + "px";
@@ -698,42 +882,28 @@ function MoveLeft() {
     checkCollect();
 }
 
+// Button event listeners
 leftBtn.addEventListener("click", MoveLeft);
-rightBtn.addEventListener("click", function() {
-    MovePos(10, 0);
-});
-upBtn.addEventListener("click", function() {
-    MovePos(0, -10);
-});
-downBtn.addEventListener("click", function() {
-    MovePos(0, 10);
-});
+rightBtn.addEventListener("click", function() { MovePos(10, 0); });
+upBtn.addEventListener("click", function() { MovePos(0, -10); });
+downBtn.addEventListener("click", function() { MovePos(0, 10); });
 resetBtn.addEventListener("click", ResetPos);
 
-// Keyboard controls with R key reset
+// Keyboard controls
 document.addEventListener('keydown', function(kbEvt) {
-    if (kbEvt.code === "ArrowRight") {
-        MovePos(10, 0);
-        kbEvt.preventDefault();
-    }
-    if (kbEvt.code === "ArrowLeft") {
-        MoveLeft();
-        kbEvt.preventDefault();
-    }
-    if (kbEvt.code === "ArrowDown") {
-        MovePos(0, 10);
-        kbEvt.preventDefault();
-    }
-    if (kbEvt.code === "ArrowUp") {
-        MovePos(0, -10);
-        kbEvt.preventDefault();
-    }
-    if (kbEvt.code === "KeyR") {
-        ResetPos();
+    var keyActions = {
+        'ArrowRight': function() { MovePos(10, 0); },
+        'ArrowLeft': function() { MoveLeft(); },
+        'ArrowDown': function() { MovePos(0, 10); },
+        'ArrowUp': function() { MovePos(0, -10); },
+        'KeyR': function() { ResetPos(); }
+    };
+    
+    if (keyActions[kbEvt.code]) {
+        keyActions[kbEvt.code]();
         kbEvt.preventDefault();
     }
 });
-
 // ============================================================
 // Score System
 // ============================================================
@@ -747,38 +917,93 @@ function F1Catch() {
 }
 
 // ============================================================
-// Timer System
+// Timer System - 30 second countdown
 // ============================================================
 
-const timerBox = document.getElementById("timerBox");
-var timing = 30;
+const timerBox = document.getElementById("timer");
+var timing = 45;
 
 function F1Timer() {
     timing--;
     if (timerBox) timerBox.innerHTML = "Time: " + timing;
-    if (timing <= 0) {
+    
+    if (timing <= 0 ) {
         clearInterval(timerInterval);
         timerInterval = null;
+        showGameOver('Time Up!', score);
     }
 }
 
-// Start timer countdown
 function startTimer() {
     if (timerInterval) {
         clearInterval(timerInterval);
         timerInterval = null;
     }
+    
+    timing = 45;
+    if (timerBox) timerBox.innerHTML = "Time: 45";
+
     timerInterval = setInterval(function() {
         if (timing > 0) {
             F1Timer();
         }
     }, 1000);
+    console.log('Timer started');
 }
 
-// Generate stars when page loads
-generateStars();
-startTimer();
+// Initialize game on page load
+document.addEventListener('DOMContentLoaded', function() {
+    generateStars();
+    F1Catch();
+});
 
+
+
+// ============================================================
+// MCQ Quiz - Check Answers
+// ============================================================
+
+const btnSubmit = document.querySelector("#btnSubmit");
+const scorebox = document.querySelector("#scorebox");
+
+btnSubmit.addEventListener("click", CheckAns);
+
+function CheckAns() {
+    var score = 0;
+    
+    // Question 1: correct answer is "1950"
+    var q1 = document.querySelector("input[name='q1']:checked");
+    if (q1 && q1.value === "1950") score++;
+    
+    // Question 2: correct answer is "Hamilton"
+    var q2 = document.querySelector("input[name='q2']:checked");
+    if (q2 && q2.value === "Hamilton") score++;
+    
+    // Question 3: correct answer is "Monza"
+    var q3 = document.querySelector("input[name='q3']:checked");
+    if (q3 && q3.value === "Monza") score++;
+    
+    // Question 4: correct answer is "11"
+    var q4 = document.querySelector("input[name='q4']:checked");
+    if (q4 && q4.value === "11") score++;
+    
+    // Show score
+    scorebox.innerHTML = "Score: " + score + "/4";
+    
+    // Reset after 10 seconds
+    setTimeout(function() {
+        document.querySelectorAll('.options-wrapper input:checked').forEach(function(input) {
+            input.checked = false;
+        });
+        scorebox.innerHTML = "Not submitted";
+    }, 3000);
+}
+
+
+
+// ============================================================
+// Feedback Form - Submit user feedback
+// ============================================================
 
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -797,7 +1022,43 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
 });
 
 // ============================================================
-// Sprite Button Controls
+// Game Over Popup System
+// ============================================================
+
+// Get popup elements
+var popupOverlay = document.getElementById('gameOverPopup');
+var popupTitle = document.getElementById('popupTitle');
+var popupScore = document.getElementById('popupScore');
+
+// Show game over popup
+function showGameOver(title, score) {
+    popupTitle.textContent = title;
+    popupScore.textContent = score;
+    popupOverlay.classList.add('show');
+    // Stop timer
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    gameRunning = false;
+}
+
+// Hide game over popup
+function hideGameOver() {
+    popupOverlay.classList.remove('show');
+}
+
+// Reset game from popup button
+function resetGame() {
+    hideGameOver();
+    gameRunning = true;
+    ResetPos();
+    generateStars();
+    startTimer();
+}
+
+// ============================================================
+// Sprite Button Controls - Reset and Fullscreen
 // ============================================================
 
 document.querySelectorAll('.spritebtn').forEach(function(btn) {
@@ -805,11 +1066,12 @@ document.querySelectorAll('.spritebtn').forEach(function(btn) {
         var icon = this.querySelector('.resetbtnsprite, .fullscrbtnsprite');
         
         if (icon) {
+            // Reset button - scroll to top
             if (icon.classList.contains('resetbtnsprite')) {
-                // Reset game without refresh
-                ResetPos();
-                console.log('🔄 Game reset via sprite button');
-            } else if (icon.classList.contains('fullscrbtnsprite')) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } 
+            // Fullscreen button - toggle fullscreen
+            else if (icon.classList.contains('fullscrbtnsprite')) {
                 if (!document.fullscreenElement) {
                     document.documentElement.requestFullscreen();
                 } else {
